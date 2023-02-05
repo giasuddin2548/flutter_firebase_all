@@ -3,6 +3,7 @@ import 'package:emplyee_panel/utils.dart';
 import 'package:flutter/material.dart';
 
 import 'login_screen.dart';
+import 'otp_screen.dart';
 
 class CreateScreen extends StatefulWidget {
   const CreateScreen({Key? key}) : super(key: key);
@@ -92,6 +93,6 @@ class _CreateScreenState extends State<CreateScreen> {
 
   void _login() {
     MyUtils.showSnackBar('Account Created Success', context);
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const LoginScreen()), (route) => false);
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const OtpScreen()), (route) => false);
   }
 }
