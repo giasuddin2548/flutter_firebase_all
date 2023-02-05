@@ -1,4 +1,7 @@
 import 'package:emplyee_panel/editor.dart';
+import 'package:emplyee_panel/models/usermodel.dart';
+import 'package:emplyee_panel/services/firebase_auth.dart';
+import 'package:emplyee_panel/services/firestore.dart';
 import 'package:emplyee_panel/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -61,7 +64,7 @@ class _CreateScreenState extends State<CreateScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                           onPressed: (){
-                            _login();
+                            _createAccount();
                           },
                           child: const Text('Create Account')
                       ),
@@ -91,8 +94,23 @@ class _CreateScreenState extends State<CreateScreen> {
     );
   }
 
-  void _login() {
-    MyUtils.showSnackBar('Account Created Success', context);
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const OtpScreen()), (route) => false);
+  void _createAccount() async{
+   await MyFirebaseAuth().createUserEmailPass(emailController.text, passwordController.text).then((value) async{
+        if(value==true){
+
+           await FirestoreService().postSingleUserData(UserModel(email: emailController.text, fullName: fullNameController.text, password: passwordController.text, phoneNo: phoneController.text)).then((value) {
+             if(value==true){
+               MyUtils.showSnackBar('Account Created Success', context);
+               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const OtpScreen()), (route) => false);
+             }else{
+               MyUtils.showSnackBar('Failed', context);
+             }
+           });
+
+        }else{
+          MyUtils.showSnackBar('Failed', context);
+        }
+   });
+
   }
 }
