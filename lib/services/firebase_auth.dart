@@ -25,21 +25,34 @@ class MyFirebaseAuth{
     return status;
   }
 
-  Future<void> loginUserEmailPass(String email, String password)async{
+  Future<bool> loginUserEmailPass(String email, String password)async{
+    var status=false;
     try{
-      await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password).whenComplete(() {
+        status=true;
+      });
     }on FirebaseAuthException catch(e){
+      status=false;
       print("FirebaseAuthException: ${e.code}");
     }
+
+    return status;
   }
 
-  Future<void> logout()async{
+  Future<bool> logout()async{
+    var status=false;
     try{
-      await _firebaseAuth.signOut();
+      await _firebaseAuth.signOut().whenComplete(() {
+        status=true;
+      });
     }on FirebaseAuthException catch(e){
+      status=false;
       print("FirebaseAuthException: ${e.code}");
     }
+
+    return status;
   }
+
 
   // Future<void> deleteMyAccount()async{
   //   try{

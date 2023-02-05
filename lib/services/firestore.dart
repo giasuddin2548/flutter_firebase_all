@@ -1,6 +1,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emplyee_panel/models/usermodel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class FirestoreService{
@@ -18,6 +19,21 @@ class FirestoreService{
     }
 
     return status;
+  }
+
+  Future<List<UserModel>> getAllUser()async{
+    List<UserModel> dataList=[];
+    try{
+      final data=await _db.collection('users').get();
+      final myData=data.docs.map((e) => UserModel.fromSnapshot(e)).toList();
+      print('DDDDD: ${myData.length}');
+      dataList=myData;
+    } on FirebaseException catch (e){
+
+      print(e);
+    }
+
+    return dataList;
   }
 
 

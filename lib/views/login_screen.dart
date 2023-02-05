@@ -1,4 +1,5 @@
 import 'package:emplyee_panel/editor.dart';
+import 'package:emplyee_panel/services/firebase_auth.dart';
 import 'package:emplyee_panel/utils.dart';
 import 'package:emplyee_panel/views/dashboard.dart';
 import 'package:flutter/material.dart';
@@ -80,9 +81,18 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _login() {
-    // Navigator.push(context, MaterialPageRoute(builder: (context) =>  const Dashboard()));
-    MyUtils.showSnackBar('Login Success', context);
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const Dashboard()), (route) => false);
+
+  void _login() async{
+    await MyFirebaseAuth().loginUserEmailPass(emailController.text, passwordController.text).then((value) async{
+      if(value==true){
+
+        MyUtils.showSnackBar('Login Success', context);
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const Dashboard()), (route) => false);
+
+      }else{
+        MyUtils.showSnackBar('Failed', context);
+      }
+    });
+
   }
 }

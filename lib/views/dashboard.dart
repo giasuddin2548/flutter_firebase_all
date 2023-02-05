@@ -2,6 +2,10 @@ import 'package:emplyee_panel/utils.dart';
 import 'package:emplyee_panel/views/login_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../models/usermodel.dart';
+import '../services/firebase_auth.dart';
+import '../services/firestore.dart';
+
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
 
@@ -10,6 +14,15 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+
+  List<UserModel> list=[];
+
+  @override
+  void initState() {
+    _getFirebaseData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +31,7 @@ class _DashboardState extends State<Dashboard> {
         title: const Center(child: Text('Dashboard')),
         actions: [
           IconButton(onPressed: (){
-            _logout(context);
+            _logout();
           }, icon: const Icon(Icons.logout)),
           // IconButton(onPressed: (){
           //  // _newRecord();
@@ -28,20 +41,35 @@ class _DashboardState extends State<Dashboard> {
           // }, icon: const Icon(Icons.delete)),
         ],
       ),
-      body: Container(),
+      body: ListView.builder(
+          itemCount: list.length,
+          itemBuilder: (c, i){
+            var d=list[i];
+            return ListTile(title: Text(d.fullName),subtitle: Text(d.email),);
+          }),
     );
   }
 
-  void _logout(BuildContext context)async {
-    // await MyFirebaseAuth().logout().then((value){
-    MyUtils.showSnackBar('Logout Success', context);
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const LoginScreen()), (route) => false);
-    // });
+
+  void _logout() async{
+    await MyFirebaseAuth().logout().then((value) async{
+      if(value==true){
+
+        MyUtils.showSnackBar('Logout Success', context);
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const LoginScreen()), (route) => false);
+      }else{
+        MyUtils.showSnackBar('Failed', context);
+      }
+    });
 
   }
 
-  // void _deleteAccount(BuildContext context) async{
-  //   Navigator.pop(context);
-  //   await MyFirebaseAuth().delete();
-  // }
+  void _getFirebaseData() async{
+    list.clear();
+    await FirestoreService().getAllUser().then((value) {
+      setState(() {
+        list=value;
+      });
+    });
+  }
 }
