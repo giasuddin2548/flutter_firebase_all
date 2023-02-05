@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "875932910152",
+    "project_id": "employee-panel-aafc1",
+    "storage_bucket": "employee-panel-aafc1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875932910152:android:47244cc7eaddcea7170e7d",
+        "android_client_info": {
+          "package_name": "com.csiemplyee.emplyee_panel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875932910152-j1eceov112k72psberqt9g4jpmd18604.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4tB5Yavh5IHa_tW2HR9_ox8Af7UqUlVc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875932910152-j1eceov112k72psberqt9g4jpmd18604.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "875932910152-tf994qk8v1694sd6nonl98d836erphg5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.csiemplyee.emplyeePanel"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
