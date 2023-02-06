@@ -29,11 +29,27 @@ class FirestoreService{
       print('DDDDD: ${myData.length}');
       dataList=myData;
     } on FirebaseException catch (e){
-
       print(e);
     }
 
     return dataList;
+  }
+
+  Future<UserModel> getSingleUser(String email)async{
+
+    // try{
+    //   final data=await _db.collection('users').where(email , isEqualTo: 'email').get();
+    //   final myData=data.docs.map((e) => UserModel.fromSnapshot(e)).single;
+    //   print('DDDDD: ${myData.length}');
+    //   dataList=myData;
+    // } on FirebaseException catch (e){
+    //   print(e);
+    // }
+
+    final data=await _db.collection('users').where(email).get();
+    final myData=data.docs.map((e) => UserModel.fromSnapshot(e)).single;
+
+    return myData;
   }
 
 

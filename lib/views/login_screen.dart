@@ -83,16 +83,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
   void _login() async{
-    await MyFirebaseAuth().loginUserEmailPass(emailController.text, passwordController.text).then((value) async{
-      if(value==true){
-
-        MyUtils.showSnackBar('Login Success', context);
+    // await MyFirebaseAuth().loginUserEmailPass(emailController.text, passwordController.text).then((value) async{
+    //   if(value==true){
+    //
+    //     MyUtils.showSnackBar('Login Success', context);
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  const Dashboard()), (route) => false);
-
-      }else{
-        MyUtils.showSnackBar('Failed', context);
-      }
-    });
+    //
+    //   }else{
+    //     MyUtils.showSnackBar('Failed', context);
+    //   }
+    // });
 
   }
 }
