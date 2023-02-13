@@ -68,6 +68,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) =>  const CreateScreen()));
                         }, child: const Text('Create account')),
                         TextButton(onPressed: (){}, child: const Text('Forgot password')),
+                        TextButton(onPressed: (){
+                          _googleSignIn();
+                        }, child: const Text('Google')),
                       ],
                     ),
                   ),
@@ -94,5 +97,9 @@ class _LoginScreenState extends State<LoginScreen> {
     //   }
     // });
 
+  }
+
+  void _googleSignIn() async{
+    await MyFirebaseAuth().signInWithGoogle();
   }
 }
